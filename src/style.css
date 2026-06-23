@@ -1,0 +1,223 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #12141a;
+  --surface: #1a1d26;
+  --surface-raised: #22262f;
+  --text: #e8eaed;
+  --text-muted: #9aa0ab;
+  --border: #2e3340;
+  --accent: #6ea8fe;
+  --today-bg: rgba(110, 168, 254, 0.1);
+  --today-border: #6ea8fe;
+  --input-hover: rgba(255, 255, 255, 0.04);
+  --focus-ring: rgba(110, 168, 254, 0.25);
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.header {
+  margin-bottom: 1.75rem;
+}
+
+.owner {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.goals {
+  margin-bottom: 0.75rem;
+}
+
+.goals-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.goals-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.goals-list li + li {
+  margin-top: 0.2rem;
+}
+
+.reminder {
+  margin: 0;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.tracker {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.tracker th {
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 0.85rem 1rem;
+  background: #f8f9fb;
+  border-bottom: 1px solid var(--border);
+}
+
+.tracker td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.tracker tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.col-day {
+  width: 88px;
+}
+
+.col-check {
+  width: 72px;
+  text-align: center;
+}
+
+.col-workouts {
+  width: auto;
+}
+
+.day-name {
+  font-weight: 500;
+}
+
+.today-badge {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.day-row--today {
+  background: var(--today-bg);
+  box-shadow: inset 3px 0 0 var(--today-border);
+}
+
+.day-row--today td:first-child {
+  padding-left: calc(1rem - 3px);
+}
+
+.workout-check {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.workout-input {
+  display: block;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  resize: vertical;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.workout-input:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.workout-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.day-row--today .workout-input:focus {
+  background: var(--surface);
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 1.25rem 0.75rem 2rem;
+  }
+
+  .owner {
+    font-size: 1.5rem;
+  }
+
+  .tracker th,
+  .tracker td {
+    padding: 0.55rem 0.65rem;
+  }
+
+  .col-day {
+    width: 64px;
+  }
+
+  .col-check {
+    width: 52px;
+  }
+
+  .workout-check {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .workout-input {
+    min-height: 3rem;
+    font-size: 0.9rem;
+  }
+}
