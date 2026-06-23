@@ -40,6 +40,38 @@ body {
   padding: 2rem 1.25rem 3rem;
 }
 
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0 0.75rem;
+  background: linear-gradient(180deg, rgba(18, 20, 26, 0.95), transparent);
+  overflow-x: auto;
+}
+
+.tab {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid transparent;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tab--active {
+  background: var(--surface-raised);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.person-section {
+  scroll-margin-top: 72px;
+  /* allow space for sticky tabs */
+  margin-bottom: 1.25rem;
+}
+
 .header {
   margin-bottom: 1.75rem;
 }
@@ -68,7 +100,7 @@ body {
   color: var(--text-muted);
 }
 
-.goals-list li + li {
+.goals-list li+li {
   margin-top: 0.2rem;
 }
 
