@@ -66,6 +66,12 @@ export function getCurrentWeekData(data) {
 }
 
 export function updateDay(data, weekStart, day, updates) {
+  // Ensure a minimal structure if `data` is missing (avoid crashes when
+  // event handlers call updateDay(loadData(), ... ) and localStorage is empty).
+  if (!data) data = { ownerName: 'Sami', weeks: {} };
+  if (!data.weeks) data.weeks = {};
+  if (!data.weeks[weekStart]) data.weeks[weekStart] = createEmptyWeek();
+
   const week = data.weeks[weekStart];
   week[day] = { ...week[day], ...updates };
   saveData(data);
