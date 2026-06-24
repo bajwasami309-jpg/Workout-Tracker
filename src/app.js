@@ -4,6 +4,7 @@ import {
   getTodayIndex,
   loadData,
   updateDay,
+  getWeekStartMonday,
 } from './storage.js';
 import { saveDay } from './supabase.js';
 
@@ -175,7 +176,12 @@ export function renderApp(container, opts = {}) {
   // Attach listeners per section
   container.querySelectorAll('.person-section').forEach((section) => {
     const personId = section.dataset.personId;
-    const weekStart = optWeekStart; // may be undefined in fallback
+    // fallback to current week if caller didn't pass weekStart
+    const weekStart = optWeekStart ?? getWeekStartMonday();
+
+    if (!personId || !weekStart) {
+      console.warn('save skipped: missing personId or weekStart', { personId, weekStart });
+    }
 
     section.querySelectorAll('.day-row').forEach((row) => {
       const day = row.dataset.day;
@@ -189,11 +195,15 @@ export function renderApp(container, opts = {}) {
         updateDay(current, weekStart, day, { workedOut: checkbox.checked });
         // try saving to Supabase when available
         if (personId && weekStart) {
+          console.debug('attempting saveDay (checkbox)', { personId, weekStart, day, workedOut: checkbox.checked });
           try {
             await saveDay(personId, weekStart, day, { workedOut: checkbox.checked });
+            console.debug('saveDay success (checkbox)', { personId, weekStart, day });
           } catch (err) {
-            console.error('saveDay error:', err.message);
+            console.error('saveDay error (checkbox):', err?.message ?? err);
           }
+        } else {
+          console.warn('saveDay not called (checkbox) - missing identifiers', { personId, weekStart });
         }
       });
 
@@ -206,11 +216,15 @@ export function renderApp(container, opts = {}) {
           const current = loadData();
           updateDay(current, weekStart, day, { workoutsDone: val });
           if (personId && weekStart) {
+            console.debug('attempting saveDay (done)', { personId, weekStart, day, workoutsDone: val });
             try {
               await saveDay(personId, weekStart, day, { workoutsDone: val });
+              console.debug('saveDay success (done)', { personId, weekStart, day });
             } catch (err) {
-              console.error('saveDay error:', err.message);
+              console.error('saveDay error (done):', err?.message ?? err);
             }
+          } else {
+            console.warn('saveDay not called (done) - missing identifiers', { personId, weekStart });
           }
         }, 400);
       });
@@ -223,11 +237,15 @@ export function renderApp(container, opts = {}) {
           const current = loadData();
           updateDay(current, weekStart, day, { workoutsPlanned: val });
           if (personId && weekStart) {
+            console.debug('attempting saveDay (planned)', { personId, weekStart, day, workoutsPlanned: val });
             try {
               await saveDay(personId, weekStart, day, { workoutsPlanned: val });
+              console.debug('saveDay success (planned)', { personId, weekStart, day });
             } catch (err) {
-              console.error('saveDay error:', err.message);
+              console.error('saveDay error (planned):', err?.message ?? err);
             }
+          } else {
+            console.warn('saveDay not called (planned) - missing identifiers', { personId, weekStart });
           }
         }, 400);
       });
